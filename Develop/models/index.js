@@ -17,14 +17,18 @@ Product.belongsToMany(Tag, {
   through: {
     model: ProductTag,
     unique: false
-  }
+  },
+  // Alias for retrieved data
+  as: 'product_tags'
 });
 // Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Product, {
   through: {
     model: ProductTag,
     unique: false
-  }
+  },
+  // Alias for retrieved data
+  as: 'tagged_products'
 });
 
 module.exports = {
