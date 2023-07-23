@@ -24,11 +24,13 @@ router.get('/', async (req, res) => {
 
   // find a single tag by its `id`
 router.get('/:id', async (req, res) => {
+    /* req.body should look like this...
+    {
+      tag_name: "yellow"
+    }
+  */
   try{
-    const tagData = await Tag.findByPk({
-      where: {
-        id: req.params.id
-      }, 
+    const tagData = await Tag.findByPk(req.params.id, {
       // Includes associated Product data
       include: [
         {
@@ -72,7 +74,7 @@ router.put('/:id', async (req, res) => {
       }
     }
    )
-   res.status(200).json(tagData);
+   res.status(200).json("Successfully Updated");
   }
   catch (err) {
     res.status(500).json(err);
@@ -89,8 +91,9 @@ router.delete('/:id', async (req, res) => {
     });
     if (!tagData) {
       res.status(404).json({ message: 'No tag with that ID found, please try again'});
+      return;
     }
-    res.status(200).json(tagData);
+    res.status(200).json("Successfully Deleted");
   }
   catch (err) {
     res.status(500).json(err);
